@@ -1,0 +1,21 @@
+#{{ ansible_managed }}
+{#
+#
+#    ==== Default server template for le9i0nx.bacula role ====
+#
+# List of parameters supported by this template:
+#
+#
+#}
+
+## {{ icinga__client.group }}.{{ icinga__client.name }}
+define host{
+    use                     linux-server;
+    host_name               {{ icinga__client.group }}.{{ icinga__client.name }}
+    alias                   {{ icinga__client.group }}.{{ icinga__client.name }}
+    address                 {{ icinga__client.ip }}
+    parents                 {{ icinga__client.parents | join(', ') }}
+    icon_image              rack_linux.png
+    statusmap_image         rack_linux.png
+    hostgroups              {{ icinga__client.hostgroups | join(', ') }}
+}
