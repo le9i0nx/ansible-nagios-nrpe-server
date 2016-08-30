@@ -14,8 +14,8 @@ define host{
     host_name               {{ icinga__client.group }}.{{ icinga__client.name }}
     alias                   {{ icinga__client.group }}.{{ icinga__client.name }}
     address                 {{ icinga__client.ip }}
-    parents                 {{ icinga__client.parents | join(', ') }}
+    parents                 {{ icinga__client.parents | unique | join(', ') }}
     icon_image              rack_linux.png
     statusmap_image         rack_linux.png
-    hostgroups              {{ icinga__client.hostgroups | join(', ') }}
+    hostgroups              {{ icinga__client.hostgroups | unique | join(', ') }}
 }
