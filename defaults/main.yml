@@ -22,19 +22,25 @@ nrpe__ferm__dependent_rules:
     saddr: '{{ icinga__server.ip }}'
     accept_any: False
 
-
 icinga__server:
   name_ansible: ""
   ip: "{{ nagios_nrpe_allow }}"
 
+icinga__client_group: "{{ ansible_domain.split('.')[0] }}"
+icinga__client_name:  "{{ ansible_hostname }}"
+icinga__client_ip:    "{{ ansible_fqdn }}"
+icinga__client_parents:
+  - "test"
+icinga__client_hostgroups:
+  - "ssh"
+  - "nrpe"
+
+#old
 icinga__client:
-  group: "{{ ansible_domain.split('.')[0] }}"
-  name: '{{ ansible_hostname }}'
-  ip: '{{ ansible_fqdn }}'
-  parents:
-    - "test"
-  hostgroups:
-    - "ssh"
-    - "nrpe"
+  group: "{{ icinga__client_group }}"
+  name: "{{ icinga__client_name }}"
+  ip: "{{ icinga__client_ip }}"
+  parents: "{{ icinga__client_parents }}"
+  hostgroups: "{{ icinga__client_hostgroups }}"
 
 ## vim: foldmethod=marker:tabstop=2:shiftwidth=2:softtabstop=2
