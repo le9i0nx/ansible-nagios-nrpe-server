@@ -11,7 +11,10 @@ nagios_nrpe_server_config:
   server_port: 5666
   allowed_hosts: 127.0.0.1
 
-nagios_nrpe_server_commands: []
+nagios_nrpe_server_commands: "{{ nagios_nrpe_server_commands_group + nagios_nrpe_server_commands_default + nagios_nrpe_server_commands_host }}"
+nagios_nrpe_server_commands_host: []
+nagios_nrpe_server_commands_default: []
+nagios_nrpe_server_commands_group: []
 nagios_nrpe_server_sudo_commands: []
 
 nrpe__ferm__dependent_rules:
@@ -31,7 +34,12 @@ icinga__client_name:  "{{ ansible_hostname }}"
 icinga__client_ip:    "{{ ansible_fqdn }}"
 icinga__client_parents:
   - "test"
-icinga__client_hostgroups:
+icinga__client_hostgroups: "{{ icinga__client_hostgroups_default + icinga__client_hostgroups_group + icinga__client_hostgroups_rugion +  icinga__client_hostgroups_host }}"
+icinga__client_hostgroups_group: []
+icinga__client_hostgroups_rugion: []
+icinga__client_hostgroups_host: []
+
+icinga__client_hostgroups_default:
   - "ssh"
   - "nrpe"
 
