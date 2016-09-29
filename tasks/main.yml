@@ -58,14 +58,14 @@
     group:  '{{ item.group  | default("root") }}'
     mode:   '{{ item.mode   | default("0755") }}'
   with_items:
-    - { path: '/etc/icinga/conf.d/{{ icinga__client.group }}'  }
+    - { path: '/etc/icinga/conf.d/{{ icinga__client.group | replace(".","/") }}'  }
   delegate_to: '{{ icinga__server.name_ansible }}'
   when: icinga__client|d()
 
 - name: Configure client -> icinga
   template:
     src: "etc/icinga/conf.d/client.cfg.j2"
-    dest: '/etc/icinga/conf.d/{{ icinga__client.group }}/host-{{ icinga__client.name }}.cfg'
+    dest: '/etc/icinga/conf.d/{{ icinga__client.group | replace(".","/") }}/host-{{ icinga__client.name }}.cfg'
     owner: 'root'
     group: 'root'
     mode: '0444'

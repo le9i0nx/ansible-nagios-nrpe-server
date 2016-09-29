@@ -1,3 +1,16 @@
 ---
 - name: restart nagios-nrpe-server
   service: name={{ nagios_nrpe_server_service_name }} state=restarted
+
+- name: Check icinga__client -> icinga__server
+  command: /etc/init.d/icinga checkconfig
+  delegate_to: '{{ icinga__server.name_ansible }}'
+  run_once: true
+  notify: Check icinga__client -> icinga__server restart
+
+- name: Check icinga__client -> icinga__server restart
+  service:
+    name: icinga
+    state: restarted
+  run_once: true
+  delegate_to: '{{ icinga__server.name_ansible }}'
